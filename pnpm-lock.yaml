@@ -56,6 +56,9 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      glslify:
+        specifier: ^7.1.1
+        version: 7.1.1
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -99,9 +102,6 @@ importers:
       glsl-noise:
         specifier: ^0.0.0
         version: 0.0.0
-      glslify:
-        specifier: ^7.1.1
-        version: 7.1.1
       typescript:
         specifier: ~5.9.3
         version: 5.9.3
