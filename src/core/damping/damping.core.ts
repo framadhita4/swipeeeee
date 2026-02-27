@@ -3,13 +3,13 @@ import { ResolvedSwiperOptions, SwiperState } from '../../types';
 export function recordDragSample(state: SwiperState, options: ResolvedSwiperOptions): void {
   const sample = { position: state.targetPosition, time: performance.now() };
   state.dragSamples.push(sample);
-  if (state.dragSamples.length > options.velocitySamples) {
+  if (state.dragSamples.length > options.dampingSamples) {
     state.dragSamples.shift();
   }
 }
 
-export function applyVelocity(state: SwiperState, options: ResolvedSwiperOptions): void {
-  if (options.velocityPower === 0 || state.dragSamples.length < 2) {
+export function applyDamping(state: SwiperState, options: ResolvedSwiperOptions): void {
+  if (options.dampingPower === 0 || state.dragSamples.length < 2) {
     state.dragSamples = [];
     return;
   }
@@ -23,7 +23,7 @@ export function applyVelocity(state: SwiperState, options: ResolvedSwiperOptions
     return;
   }
 
-  const velocity = (newest.position - oldest.position) / dt;
-  state.targetPosition += velocity * options.velocityPower * 100;
+  const damping = (newest.position - oldest.position) / dt;
+  state.targetPosition += damping * options.dampingPower * 100;
   state.dragSamples = [];
 }

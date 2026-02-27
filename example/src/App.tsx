@@ -104,7 +104,7 @@ function App() {
             gap={64}
             snap={true}
             snapAlign="center"
-            velocityPower={1}
+            dampingPower={1}
           >
             {Array.from({ length: 10 }).map((_, index) => (
               <div key={index} className="slide">

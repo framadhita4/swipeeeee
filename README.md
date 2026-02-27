@@ -1,11 +1,11 @@
 # swipeeeeee
 
-A simple, performance-focused slider/swiper library for React. Built on a vanilla JS core with lerp-based animation and velocity-driven momentum — no dependencies beyond React.
+A simple, performance-focused slider/swiper library for React. Built on a vanilla JS core with lerp-based animation and damping-driven momentum — no dependencies beyond React.
 
 ## Features
 
 - Smooth lerp (linear interpolation) animation
-- Velocity-based momentum on release
+- Damping-based momentum on release
 - Optional snap-to-slide with `start` or `center` alignment
 - Mouse and touch support
 - Exposes internal state via `ref` for creative integrations
@@ -50,8 +50,8 @@ export default function App() {
 | `lerpFactor`      | `number`                     | `0.1`     | Smoothing factor for animation (0–1, lower = smoother)        |
 | `dragSensitivity` | `number`                     | `0.003`   | Drag distance multiplier                                      |
 | `forcePower`      | `number`                     | `5`       | Multiplier applied to momentum force                          |
-| `velocityPower`   | `number`                     | `1`       | Scales the velocity applied on drag release                   |
-| `velocitySamples` | `number`                     | `5`       | Number of drag samples used for velocity calculation          |
+| `dampingPower`   | `number`                     | `1`       | Scales the damping applied on drag release                   |
+| `dampingSamples` | `number`                     | `5`       | Number of drag samples used for damping calculation          |
 | `className`       | `string`                     | —         | Class name applied to the container element                   |
 | `style`           | `React.CSSProperties`        | —         | Inline styles for the container element                       |
 | `ref`             | `React.RefObject<SwiperRef>` | —         | Ref to access internal swiper state                           |
@@ -112,8 +112,8 @@ const core = new SwiperCore(container, {
   lerpFactor: 0.1,
   dragSensitivity: 0.003,
   forcePower: 5,
-  velocityPower: 1,
-  velocitySamples: 5,
+  dampingPower: 1,
+  dampingSamples: 5,
   slideWidth: 0,
 })
 

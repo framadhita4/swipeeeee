@@ -7,8 +7,8 @@ export interface SwiperOptions {
   forcePower?: number;
   snap?: boolean;
   snapAlign?: 'start' | 'center';
-  velocityPower?: number;
-  velocitySamples?: number;
+  dampingPower?: number;
+  dampingSamples?: number;
 }
 
 export type ResolvedSwiperOptions = Required<SwiperOptions>;
@@ -42,8 +42,8 @@ export const DEFAULT_OPTIONS: ResolvedSwiperOptions = {
   forcePower: 5,
   snap: false,
   snapAlign: 'start',
-  velocityPower: 1,
-  velocitySamples: 5,
+  dampingPower: 1,
+  dampingSamples: 5,
 };
 
 export function createInitialState(): SwiperState {

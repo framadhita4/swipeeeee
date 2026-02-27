@@ -2,7 +2,7 @@ import { SwiperState, ResolvedSwiperOptions, createInitialState } from '../types
 import { measureSlides, updatePositions } from './position/position.core';
 import { startAnimation, stopAnimation } from './animation/animation.core';
 import { getSnapOffset, snapToNearest } from './snap/snap.core';
-import { applyVelocity, recordDragSample } from './velocity/velocity.core';
+import { applyDamping, recordDragSample } from './damping/damping.core';
 
 export class SwiperCore {
   private container: HTMLElement;
@@ -76,7 +76,7 @@ export class SwiperCore {
     if (!this.state.isDragging) return;
     this.state.isDragging = false;
     this.container.style.cursor = 'grab';
-    applyVelocity(this.state, this.options);
+    applyDamping(this.state, this.options);
     if (this.options.snap) {
       snapToNearest(this.container, this.options, this.state);
     }
@@ -100,7 +100,7 @@ export class SwiperCore {
   onTouchEnd() {
     if (!this.state.isDragging) return;
     this.state.isDragging = false;
-    applyVelocity(this.state, this.options);
+    applyDamping(this.state, this.options);
     if (this.options.snap) {
       snapToNearest(this.container, this.options, this.state);
     }

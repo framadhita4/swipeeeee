@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { recordDragSample, applyVelocity } from './velocity.core';
+import { recordDragSample, applyDamping } from './damping.core';
 import { createInitialState, DEFAULT_OPTIONS } from '../../types';
 
 describe('recordDragSample', () => {
@@ -21,9 +21,9 @@ describe('recordDragSample', () => {
     expect(typeof state.dragSamples[0].time).toBe('number');
   });
 
-  it('accumulates samples up to the velocitySamples limit', () => {
+  it('accumulates samples up to the dampingSamples limit', () => {
     const state = createInitialState();
-    const options = { ...DEFAULT_OPTIONS, velocitySamples: 3 };
+    const options = { ...DEFAULT_OPTIONS, dampingSamples: 3 };
 
     for (let i = 0; i < 3; i++) {
       state.targetPosition = i;
@@ -35,7 +35,7 @@ describe('recordDragSample', () => {
 
   it('drops the oldest sample once the limit is exceeded', () => {
     const state = createInitialState();
-    const options = { ...DEFAULT_OPTIONS, velocitySamples: 3 };
+    const options = { ...DEFAULT_OPTIONS, dampingSamples: 3 };
 
     for (let i = 0; i < 5; i++) {
       state.targetPosition = i;
@@ -49,8 +49,8 @@ describe('recordDragSample', () => {
   });
 });
 
-describe('applyVelocity', () => {
-  it('clears samples without moving when velocityPower is 0', () => {
+describe('applyDamping', () => {
+  it('clears samples without moving when dampingPower is 0', () => {
     const state = createInitialState();
     state.dragSamples = [
       { position: 0, time: 0 },
@@ -58,7 +58,7 @@ describe('applyVelocity', () => {
     ];
     state.targetPosition = 5;
 
-    applyVelocity(state, { ...DEFAULT_OPTIONS, velocityPower: 0 });
+    applyDamping(state, { ...DEFAULT_OPTIONS, dampingPower: 0 });
 
     expect(state.dragSamples).toHaveLength(0);
     expect(state.targetPosition).toBe(5);
@@ -69,7 +69,7 @@ describe('applyVelocity', () => {
     state.dragSamples = [{ position: 0, time: 0 }];
     state.targetPosition = 5;
 
-    applyVelocity(state, DEFAULT_OPTIONS);
+    applyDamping(state, DEFAULT_OPTIONS);
 
     expect(state.dragSamples).toHaveLength(0);
     expect(state.targetPosition).toBe(5);
@@ -83,52 +83,52 @@ describe('applyVelocity', () => {
     ];
     state.targetPosition = 5;
 
-    applyVelocity(state, DEFAULT_OPTIONS);
+    applyDamping(state, DEFAULT_OPTIONS);
 
     expect(state.dragSamples).toHaveLength(0);
     expect(state.targetPosition).toBe(5);
   });
 
-  it('applies positive velocity to targetPosition', () => {
+  it('applies positive damping to targetPosition', () => {
     const state = createInitialState();
-    // velocity = (1 - 0) / 100ms = 0.01; added = 0.01 * 1 * 100 = 1
+    // damping = (1 - 0) / 100ms = 0.01; added = 0.01 * 1 * 100 = 1
     state.dragSamples = [
       { position: 0, time: 0 },
       { position: 1, time: 100 },
     ];
     state.targetPosition = 1;
 
-    applyVelocity(state, { ...DEFAULT_OPTIONS, velocityPower: 1 });
+    applyDamping(state, { ...DEFAULT_OPTIONS, dampingPower: 1 });
 
     expect(state.targetPosition).toBeCloseTo(2);
     expect(state.dragSamples).toHaveLength(0);
   });
 
-  it('applies negative velocity to targetPosition', () => {
+  it('applies negative damping to targetPosition', () => {
     const state = createInitialState();
-    // velocity = (0 - 1) / 100ms = -0.01; added = -0.01 * 1 * 100 = -1
+    // damping = (0 - 1) / 100ms = -0.01; added = -0.01 * 1 * 100 = -1
     state.dragSamples = [
       { position: 1, time: 0 },
       { position: 0, time: 100 },
     ];
     state.targetPosition = 0;
 
-    applyVelocity(state, { ...DEFAULT_OPTIONS, velocityPower: 1 });
+    applyDamping(state, { ...DEFAULT_OPTIONS, dampingPower: 1 });
 
     expect(state.targetPosition).toBeCloseTo(-1);
     expect(state.dragSamples).toHaveLength(0);
   });
 
-  it('scales the applied momentum by velocityPower', () => {
+  it('scales the applied momentum by dampingPower', () => {
     const state1 = createInitialState();
     state1.dragSamples = [{ position: 0, time: 0 }, { position: 1, time: 100 }];
     state1.targetPosition = 0;
-    applyVelocity(state1, { ...DEFAULT_OPTIONS, velocityPower: 2 });
+    applyDamping(state1, { ...DEFAULT_OPTIONS, dampingPower: 2 });
 
     const state2 = createInitialState();
     state2.dragSamples = [{ position: 0, time: 0 }, { position: 1, time: 100 }];
     state2.targetPosition = 0;
-    applyVelocity(state2, { ...DEFAULT_OPTIONS, velocityPower: 1 });
+    applyDamping(state2, { ...DEFAULT_OPTIONS, dampingPower: 1 });
 
     expect(state1.targetPosition).toBeCloseTo(state2.targetPosition * 2);
   });

@@ -27,8 +27,8 @@ export const Swiper: React.FC<SwiperProps> = ({
   forcePower = DEFAULT_OPTIONS.forcePower,
   snap = DEFAULT_OPTIONS.snap,
   snapAlign = DEFAULT_OPTIONS.snapAlign,
-  velocityPower = DEFAULT_OPTIONS.velocityPower,
-  velocitySamples = DEFAULT_OPTIONS.velocitySamples,
+  dampingPower = DEFAULT_OPTIONS.dampingPower,
+  dampingSamples = DEFAULT_OPTIONS.dampingSamples,
   ref,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,15 +46,15 @@ export const Swiper: React.FC<SwiperProps> = ({
       forcePower,
       snap,
       snapAlign,
-      velocityPower,
-      velocitySamples,
+      dampingPower,
+      dampingSamples,
     });
 
     return () => {
       coreRef.current?.destroy();
       coreRef.current = null;
     };
-  }, [slideWidth, visibleSlides, gap, dragSensitivity, lerpFactor, forcePower, snap, snapAlign, velocityPower, velocitySamples]);
+  }, [slideWidth, visibleSlides, gap, dragSensitivity, lerpFactor, forcePower, snap, snapAlign, dampingPower, dampingSamples]);
 
   useEffect(() => {
     coreRef.current?.measure();

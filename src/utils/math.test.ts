@@ -74,11 +74,11 @@ describe('symmetricMod', () => {
 });
 
 describe('calculateForce', () => {
-  it('multiplies velocity by deltaTime', () => {
+  it('multiplies damping by deltaTime', () => {
     expect(calculateForce(5, 0.016)).toBeCloseTo(0.08);
   });
 
-  it('returns 0 when velocity is 0', () => {
+  it('returns 0 when damping is 0', () => {
     expect(calculateForce(0, 1)).toBe(0);
   });
 
@@ -86,7 +86,7 @@ describe('calculateForce', () => {
     expect(calculateForce(5, 0)).toBe(0);
   });
 
-  it('returns negative force for negative velocity', () => {
+  it('returns negative force for negative damping', () => {
     expect(calculateForce(-5, 0.016)).toBeCloseTo(-0.08);
   });
 });

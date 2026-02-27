@@ -20,8 +20,8 @@ export function symmetricMod(value: number, base: number): number {
   return m;
 }
 
-export function calculateForce(velocity: number, deltaTime: number): number {
-  return velocity * deltaTime;
+export function calculateForce(damping: number, deltaTime: number): number {
+  return damping * deltaTime;
 }
 
 export function normalize(
