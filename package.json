@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && pnpm example:build",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "type-check": "tsc --noEmit",
     "dev": "rollup -c -w",
