@@ -28,31 +28,24 @@ export class SwiperCore {
     this.container.style.cursor = 'grab';
     this.container.style.touchAction = 'pan-y';
   }
-  
-  bindEvents(): () => void {
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
-    this.onTouchStart = this.onTouchStart.bind(this);
-    this.onTouchMove = this.onTouchMove.bind(this);
-    this.onTouchEnd = this.onTouchEnd.bind(this);
 
-    this.container.addEventListener('mousedown', this.onMouseDown);
-    this.container.addEventListener('mouseleave', this.onMouseUp);
-    window.addEventListener('mousemove', this.onMouseMove);
-    window.addEventListener('mouseup', this.onMouseUp);
-    this.container.addEventListener('touchstart', this.onTouchStart, { passive: true });
-    window.addEventListener('touchmove', this.onTouchMove, { passive: false });
-    window.addEventListener('touchend', this.onTouchEnd);
+  bindEvents(): () => void {
+    this.container.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.container.addEventListener('mouseleave', this.onMouseUp.bind(this));
+    window.addEventListener('mousemove', this.onMouseMove.bind(this));
+    window.addEventListener('mouseup', this.onMouseUp.bind(this));
+    this.container.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: true });
+    window.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: false });
+    window.addEventListener('touchend', this.onTouchEnd.bind(this));
 
     return () => {
-      this.container.removeEventListener('mousedown', this.onMouseDown);
-      this.container.removeEventListener('mouseleave', this.onMouseUp);
-      window.removeEventListener('mousemove', this.onMouseMove);
-      window.removeEventListener('mouseup', this.onMouseUp);
-      this.container.removeEventListener('touchstart', this.onTouchStart);
-      window.removeEventListener('touchmove', this.onTouchMove);
-      window.removeEventListener('touchend', this.onTouchEnd);
+      this.container.removeEventListener('mousedown', this.onMouseDown.bind(this));
+      this.container.removeEventListener('mouseleave', this.onMouseUp.bind(this));
+      window.removeEventListener('mousemove', this.onMouseMove.bind(this));
+      window.removeEventListener('mouseup', this.onMouseUp.bind(this));
+      this.container.removeEventListener('touchstart', this.onTouchStart.bind(this));
+      window.removeEventListener('touchmove', this.onTouchMove.bind(this));
+      window.removeEventListener('touchend', this.onTouchEnd.bind(this));
     };
   }
 
@@ -63,14 +56,14 @@ export class SwiperCore {
     this.state.dragStartPosition = this.state.targetPosition;
     this.state.dragSamples = [];
     this.container.style.cursor = 'grabbing';
-  };
+  }
 
   onMouseMove(e: MouseEvent) {
     if (!this.state.isDragging) return;
     const deltaX = (e.clientX - this.state.dragStartX) * this.options.dragSensitivity;
     this.state.targetPosition = this.state.dragStartPosition + deltaX;
     recordDragSample(this.state, this.options);
-  };
+  }
 
   onMouseUp() {
     if (!this.state.isDragging) return;
@@ -80,14 +73,14 @@ export class SwiperCore {
     if (this.options.snap) {
       snapToNearest(this.container, this.options, this.state);
     }
-  };
+  }
 
   onTouchStart(e: TouchEvent) {
     this.state.isDragging = true;
     this.state.dragStartX = e.touches[0].clientX;
     this.state.dragStartPosition = this.state.targetPosition;
     this.state.dragSamples = [];
-  };
+  }
 
   onTouchMove(e: TouchEvent) {
     if (!this.state.isDragging) return;
@@ -95,7 +88,7 @@ export class SwiperCore {
     const deltaX = (e.touches[0].clientX - this.state.dragStartX) * this.options.dragSensitivity;
     this.state.targetPosition = this.state.dragStartPosition + deltaX;
     recordDragSample(this.state, this.options);
-  };
+  }
 
   onTouchEnd() {
     if (!this.state.isDragging) return;
@@ -104,7 +97,7 @@ export class SwiperCore {
     if (this.options.snap) {
       snapToNearest(this.container, this.options, this.state);
     }
-  };
+  }
 
   // INITIAL POSITION
   private initPosition(): void {

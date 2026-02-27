@@ -2,11 +2,7 @@ import { damp } from '../../utils/math';
 import { SwiperState, ResolvedSwiperOptions } from '../../types';
 import { updatePositions } from '../position/position.core';
 
-function tick(
-  container: HTMLElement,
-  state: SwiperState,
-  options: ResolvedSwiperOptions
-): void {
+function tick(container: HTMLElement, state: SwiperState, options: ResolvedSwiperOptions): void {
   const now = performance.now();
   const deltaTime = (now - state.prevTime) / 1000;
   state.prevTime = now;
@@ -15,7 +11,7 @@ function tick(
     state.currentPosition,
     state.targetPosition,
     1 / options.lerpFactor,
-    deltaTime
+    deltaTime,
   );
 
   const deltaPosition = state.currentPosition - state.prevPosition;
@@ -29,7 +25,7 @@ function tick(
 export function startAnimation(
   container: HTMLElement,
   state: SwiperState,
-  options: ResolvedSwiperOptions
+  options: ResolvedSwiperOptions,
 ): void {
   state.prevTime = performance.now();
 

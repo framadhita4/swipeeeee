@@ -1,10 +1,10 @@
-import './App.css'
-import { useEffect, useRef, useState } from 'react'
-import { Vector3 } from 'three'
-import { Swiper } from 'swipeeeeee'
-import type { SwiperRef } from 'swipeeeeee'
-import ThreeProvider from './components/three/ThreeProvider'
-import SwiperSliderItem from './components/SwiperSliderItem'
+import './App.css';
+import { useEffect, useRef, useState } from 'react';
+import { Vector3 } from 'three';
+import { Swiper } from 'swipeeeeee';
+import type { SwiperRef } from 'swipeeeeee';
+import ThreeProvider from './components/three/ThreeProvider';
+import SwiperSliderItem from './components/SwiperSliderItem';
 
 const GRADIENT_SCHEMES: Vector3[][] = [
   [
@@ -67,32 +67,32 @@ const GRADIENT_SCHEMES: Vector3[][] = [
     new Vector3(0.8, 0.1, 0.9),
     new Vector3(0.9, 0.9, 0.6),
   ],
-]
+];
 
 function App() {
-  const swiperRef = useRef<SwiperRef | null>(null)
-  const animationFrameRef = useRef<number | null>(null)
+  const swiperRef = useRef<SwiperRef | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const updateForce = () => {
-      const state = swiperRef.current?.getState() ?? { force: 0 }
+      const state = swiperRef.current?.getState() ?? { force: 0 };
 
-      const canvasElements = document.querySelectorAll('canvas')
+      const canvasElements = document.querySelectorAll('canvas');
       canvasElements.forEach((canvas) => {
-        canvas.setAttribute('data-bend-power', (-state.force).toString())
-      })
+        canvas.setAttribute('data-bend-power', (-state.force).toString());
+      });
 
-      animationFrameRef.current = requestAnimationFrame(updateForce)
-    }
+      animationFrameRef.current = requestAnimationFrame(updateForce);
+    };
 
-    animationFrameRef.current = requestAnimationFrame(updateForce)
+    animationFrameRef.current = requestAnimationFrame(updateForce);
 
     return () => {
       if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
+        cancelAnimationFrame(animationFrameRef.current);
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <ThreeProvider>
@@ -119,7 +119,7 @@ function App() {
         </div>
       </div>
     </ThreeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -58,7 +58,10 @@ describe('startAnimation', () => {
   });
 
   it('sets prevTime via performance.now before the first frame', () => {
-    vi.stubGlobal('requestAnimationFrame', vi.fn(() => 1));
+    vi.stubGlobal(
+      'requestAnimationFrame',
+      vi.fn(() => 1),
+    );
     vi.stubGlobal('performance', { now: vi.fn(() => 1234) });
 
     const state = createInitialState();
@@ -72,7 +75,10 @@ describe('startAnimation', () => {
 
   it('can be stopped immediately after starting', () => {
     let frameId = 0;
-    vi.stubGlobal('requestAnimationFrame', vi.fn(() => ++frameId));
+    vi.stubGlobal(
+      'requestAnimationFrame',
+      vi.fn(() => ++frameId),
+    );
     const cancelMock = vi.fn();
     vi.stubGlobal('cancelAnimationFrame', cancelMock);
 

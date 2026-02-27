@@ -4,7 +4,7 @@ import { ResolvedSwiperOptions, SwiperState } from '../../types';
 export function measureSlides(
   container: HTMLElement,
   state: SwiperState,
-  options: ResolvedSwiperOptions
+  options: ResolvedSwiperOptions,
 ): void {
   const items = Array.from(container.children) as HTMLElement[];
   if (items.length === 0) return;
@@ -19,9 +19,7 @@ export function measureSlides(
 
   state.slideCount = items.length;
   state.itemWidth =
-    slideWidth > 0
-      ? slideWidth + gap
-      : items[0].getBoundingClientRect().width + gap;
+    slideWidth > 0 ? slideWidth + gap : items[0].getBoundingClientRect().width + gap;
 
   items.forEach((item, index) => {
     item.style.flexShrink = '0';

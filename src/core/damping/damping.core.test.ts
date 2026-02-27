@@ -121,12 +121,18 @@ describe('applyDamping', () => {
 
   it('scales the applied momentum by dampingPower', () => {
     const state1 = createInitialState();
-    state1.dragSamples = [{ position: 0, time: 0 }, { position: 1, time: 100 }];
+    state1.dragSamples = [
+      { position: 0, time: 0 },
+      { position: 1, time: 100 },
+    ];
     state1.targetPosition = 0;
     applyDamping(state1, { ...DEFAULT_OPTIONS, dampingPower: 2 });
 
     const state2 = createInitialState();
-    state2.dragSamples = [{ position: 0, time: 0 }, { position: 1, time: 100 }];
+    state2.dragSamples = [
+      { position: 0, time: 0 },
+      { position: 1, time: 100 },
+    ];
     state2.targetPosition = 0;
     applyDamping(state2, { ...DEFAULT_OPTIONS, dampingPower: 1 });
 

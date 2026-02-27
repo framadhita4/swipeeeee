@@ -54,7 +54,18 @@ export const Swiper: React.FC<SwiperProps> = ({
       coreRef.current?.destroy();
       coreRef.current = null;
     };
-  }, [slideWidth, visibleSlides, gap, dragSensitivity, lerpFactor, forcePower, snap, snapAlign, dampingPower, dampingSamples]);
+  }, [
+    slideWidth,
+    visibleSlides,
+    gap,
+    dragSensitivity,
+    lerpFactor,
+    forcePower,
+    snap,
+    snapAlign,
+    dampingPower,
+    dampingSamples,
+  ]);
 
   useEffect(() => {
     coreRef.current?.measure();

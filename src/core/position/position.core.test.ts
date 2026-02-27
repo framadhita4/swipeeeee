@@ -68,7 +68,12 @@ describe('measureSlides', () => {
     const state = createInitialState();
     const items = [createMockItem(150), createMockItem(150)];
     const container = createMockContainer(items);
-    const options: ResolvedSwiperOptions = { ...DEFAULT_OPTIONS, slideWidth: 0, visibleSlides: 0, gap: 5 };
+    const options: ResolvedSwiperOptions = {
+      ...DEFAULT_OPTIONS,
+      slideWidth: 0,
+      visibleSlides: 0,
+      gap: 5,
+    };
 
     measureSlides(container, state, options);
 
